@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RFProp</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous">
+    </script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous">
+    </script>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/style.css">
+    </link>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+      crossorigin="">
+    </link>
+
+    <script
+      src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
+      integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+      crossorigin="">
+    </script>
+
+    <link rel="stylesheet"
+          href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+
+    <script src="/components/sidebar-v2/js/leaflet-sidebar.min.js"></script>
+    <link rel="stylesheet" href="/components/sidebar-v2/css/leaflet-sidebar.min.css"></link>
+
+  </head>
+  <body>
+    <div id="sidebar" class="sidebar collapsed">
+      <div class="sidebar-tabs">
+        <ul role="tablist">
+          <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+          <li><a href="#sites" role="tab"><i class="fa fa-home"></i></a></li>
+        </ul>
+        <ul role="tablist">
+          <li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+          <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-content">
+        <div class="sidebar-pane" id="home">
+          <h1 class="sidebar-header">
+            RFProp
+            <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+          </h1>
+
+          <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+
+        </div>
+
+        <div class="sidebar-pane" id="profile">
+          <h1 class="sidebar-header">Profile<span class="sidebar-close"><span class="fa fa-caret-left"/></span></h1>
+        </div>
+
+        <div class="sidebar-pane" id="sites">
+          <h1 class="sidebar-header">Sites<span class="sidebar-close"><span class="fa fa-caret-left"/></span></h1>
+          <table id="sites-table">
+          </table>
+
+          <button><span class="fa fa-plus" onclick="addSite();"/></button>
+        </div>
+
+        <div class="sidebar-pane" id="settings">
+          <h1 class="sidebar-header">Settings<span class="sidebar-close"><span class="fa fa-caret-left"/></span></h1>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="mapid" class="sidebar-map"></div>
+
+    <script type="text/javascript">
+
+      var mapboxUrl = 'https://api.mapbox.com/styles/v1/mapbox/{style}/tiles/256/{z}/{x}/{y}?access_token={token}';
+      var mapboxToken = 'pk.eyJ1IjoiaGluIiwiYSI6ImNqMXh5OG55NDAwMDgzM3FoczJrMHFkdmwifQ.aflhKOgcBtD4FjXJxRNR-A';
+      var mapboxAttribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
+
+      function mapboxLayer(style) {
+          var layer = L.tileLayer(mapboxUrl, {
+              style: style,
+              token: mapboxToken,
+              attribution: mapboxAttribution,
+          });
+          return layer;
+      }
+
+      var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> Contributors',
+      });
+
+      var outdoorsLayer = L.tileLayer('http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> Contributors, <a href="http://thunderforest.com/">'
+      });
+
+      var baseMaps = {
+          'Mapbox Outdoor': mapboxLayer('outdoors-v10'),
+          'Mapbox Streets': mapboxLayer('streets-v10'),
+          'Mapbox Light': mapboxLayer('light-v9'),
+          'Mapbox Dark': mapboxLayer('dark-v9'),
+          'Mapbox Satellite': mapboxLayer('satellite-v9'),
+          'Mapbox Satellite with streets': mapboxLayer('satellite-streets-v10'),
+          'OpenStreetMap': osmLayer,
+          'Thunderforest outdoors': outdoorsLayer,
+      };
+
+      var map = L.map('mapid', {
+          zoomSnap: 0.5,
+          zoomDelta: 0.5,
+          layers: Object.values(baseMaps)[0],
+      }).setView([59.504, 18.137], 14);
+
+      L.control.layers(baseMaps).addTo(map);
+
+      var sites = [];
+
+      $.getJSON('/api/v1/sites/all', {}, function (result) {
+          sites = result;
+          updateSites();
+      });
+
+      function updateSites() {
+          var sitelist = '';
+          for (var i = 0; i < sites.length; i++) {
+              var site = sites[i];
+              sitelist += '<tr><td>' + site.name + '</td></tr>';
+              if (!site.marker) {
+                  site.marker = L.marker(site.position, {
+                      draggable: true
+                  }).bindPopup(site.name);
+                  site.marker.addTo(map);
+                  site.marker.on('dragend', (e) => {
+                      console.log(e.target._latlng);
+                  });
+
+              }
+          }
+          sitelist += '';
+          $('#sites-table').html(sitelist);
+      };
+
+      function addSite() {
+          map.on('click', (e) => {
+              sites.push({position: e.latlng, name: 'New site'});
+              updateSites();
+              map.off('click');
+          });
+
+          console.log("Add site");
+      };
+
+      /*
+      function onMapClick(e) {
+          var pos = e.latlng;
+
+          var marker = new L.Marker(pos, {
+              draggable: true,
+              clickable: true,
+          });
+
+          marker.on('click', (e) => {
+              console.log(e.latlng);
+              $.getJSON('/api/v1/elevation/point', {
+                  lat: e.latlng.lat,
+                  lng: e.latlng.lng
+              }, function (result) {
+                  var popup = L.popup()
+                      .setLatLng(e.latlng)
+                      .setContent('Elevation: ' + result.elevation)
+                      .openOn(map);
+              });
+          });
+
+          marker.on('dragend', (e) => {
+              console.log('drag end');
+          });
+
+          marker.addTo(map);
+      }
+      map.on('click', onMapClick);
+      */
+
+      var sidebar = L.control.sidebar('sidebar').addTo(map);
+      L.control.scale().addTo(map);
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+html, body {
+    height: 100%;
+}
+#mapid { height: 100%; }
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+}

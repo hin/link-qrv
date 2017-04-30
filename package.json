@@ -1,0 +1,15 @@
+{
+  "name": "rfprop",
+  "version": "0.0.1",
+  "description": "RF Propagation Tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hans Insulander SM0UTY",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "^4.15.2",
+    "node-hgt": "^1.2.1"
+  }
+}
