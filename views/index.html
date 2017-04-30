@@ -172,9 +172,15 @@
                   site.marker.addTo(map);
                   site.marker.on('dragend', (e) => {
                       site.position = e.target.getLatLng();
-                      console.log(e.target.getLatLng());
                       updateSites();
+                      updateLinks();
                   });
+                  site.marker.on('drag', (e) => {
+                      site.position = e.target.getLatLng();
+                      console.log("drag");
+                      updateLinks();
+                  });
+
               }
           })(sites[i]);
           sitelist += '';
@@ -212,9 +218,10 @@
               site1 = findSiteById(link.sites[1]);
               linklist += '<tr><td>' + site0.name + '</td><td>' + site1.name + '</td></tr>';
               if (!link.line) {
-                  link.line = L.polyline([site0.position, site1.position])
-                      .addTo(map);
+                  link.line = L.polyline([site0.position, site1.position]);
+                  link.line.addTo(map);
               }
+              link.line.setLatLngs([site0.position, site1.position]);
           })(links[i]);
           $('#links-table').html(linklist);
       };
