@@ -190,40 +190,9 @@
           console.log("Add site");
       };
 
-      /*
-      function onMapClick(e) {
-          var pos = e.latlng;
-
-          var marker = new L.Marker(pos, {
-              draggable: true,
-              clickable: true,
-          });
-
-          marker.on('click', (e) => {
-              console.log(e.latlng);
-              $.getJSON('/api/v1/elevation/point', {
-                  lat: e.latlng.lat,
-                  lng: e.latlng.lng
-              }, function (result) {
-                  var popup = L.popup()
-                      .setLatLng(e.latlng)
-                      .setContent('Elevation: ' + result.elevation)
-                      .openOn(map);
-              });
-          });
-
-          marker.on('dragend', (e) => {
-              console.log('drag end');
-          });
-
-          marker.addTo(map);
-      }
-      map.on('click', onMapClick);
-      */
-
       var sidebar = L.control.sidebar('sidebar').addTo(map);
       L.control.scale().addTo(map);
 
-</script>
+    </script>
   </body>
 </html>
