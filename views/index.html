@@ -243,6 +243,9 @@
               if (!link.line) {
                   link.line = L.polyline([site0.position, site1.position]);
                   link.line.addTo(map);
+                  link.line.on('click', (e) => {
+                      console.log(e);
+                  });
               }
               link.line.setLatLngs([site0.position, site1.position]);
           })(links[i]);
