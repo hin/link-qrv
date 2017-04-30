@@ -55,9 +55,9 @@ app.get('/api/v1/sites/all', (req, res) => {
 
 app.get('/api/v1/links/all', (req, res) => {
     var links = [
-        { id: 0, sites: [1, 2] },
-        { id: 1, sites: [0, 2] },
-        { id: 1, sites: [0, 3] },
+        { sites: [1, 2] },
+        { sites: [0, 2] },
+        { sites: [0, 3] },
     ];
 
     res.send(links);

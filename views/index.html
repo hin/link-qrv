@@ -154,6 +154,32 @@
 
       var sites = [];
 
+      var addLinkMode = false;
+
+      var linkSelection = [];
+
+      function addLink() {
+          addLinkMode = true;
+      }
+
+      function siteClick(site, event) {
+          if (!addLinkMode) {
+              var popup = L.popup()
+                  .setLatLng(site.position)
+                  .setContent(site.name)
+                  .openOn(map);
+          } else {
+              console.log('Select site ' + site.name);
+              linkSelection.push(site.id);
+              if (linkSelection.length == 2) {
+                  links.push({sites: linkSelection});
+                  addLinkMode = false;
+                  console.log(links);
+                  updateLinks();
+              }
+          }
+      };
+
       function updateSites() {
           var sitelist = '';
           for (var i = 0; i < sites.length; i++) (function(site) {
@@ -164,10 +190,7 @@
                       draggable: true
                   });
                   site.marker.on('click', (e) => {
-                      var popup = L.popup()
-                          .setLatLng(site.position)
-                          .setContent(site.name)
-                          .openOn(map);
+                      siteClick(site, e);
                   });
                   site.marker.addTo(map);
                   site.marker.on('dragend', (e) => {
