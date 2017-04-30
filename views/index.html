@@ -61,6 +61,7 @@
         <ul role="tablist">
           <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
           <li><a href="#sites" role="tab"><i class="fa fa-home"></i></a></li>
+          <li><a href="#links" role="tab"><i class="fa fa-arrows-h"></i></a></li>
         </ul>
         <ul role="tablist">
           <li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
@@ -90,6 +91,14 @@
           </table>
 
           <button><span class="fa fa-plus" onclick="addSite();"/></button>
+        </div>
+
+        <div class="sidebar-pane" id="links">
+          <h1 class="sidebar-header">Links<span class="sidebar-close"><span class="fa fa-caret-left"/></span></h1>
+          <table id="links-table">
+          </table>
+
+          <button><span class="fa fa-plus" onclick="addLink();"/></button>
         </div>
 
         <div class="sidebar-pane" id="settings">
@@ -139,7 +148,7 @@
           zoomSnap: 0.5,
           zoomDelta: 0.5,
           layers: Object.values(baseMaps)[0],
-      }).setView([59.504, 18.137], 11);
+      }).setView([59.404, 17.937], 10);
 
       L.control.layers(baseMaps).addTo(map);
 
@@ -147,35 +156,32 @@
 
       function updateSites() {
           var sitelist = '';
-          for (var i = 0; i < sites.length; i++) {(
-              function(site) {
-                  var site = sites[i];
-                  sitelist += '<tr><td>' + site.name + '</td>'
-                  sitelist += '<td>' + site.position.lat + '/' + site.position.lng + '</td></tr>';
-                  if (!site.marker) {
-                      site.marker = new L.Marker(site.position, {
-                          draggable: true
-                      });
-                      site.marker.on('click', (e) => {
-                          var popup = L.popup()
-                              .setLatLng(site.position)
-                              .setContent(site.name)
-                              .openOn(map);
-                      });
-                      site.marker.addTo(map);
-                      site.marker.on('dragend', (e) => {
-                          site.position = e.target.getLatLng();
-                          console.log(e.target.getLatLng());
-                          updateSites();
-                      });
-                  }
-              })(sites[i]);
-          }
+          for (var i = 0; i < sites.length; i++) (function(site) {
+              sitelist += '<tr><td>' + site.name + '</td>'
+              sitelist += '<td>' + site.position.lat + '/' + site.position.lng + '</td></tr>';
+              if (!site.marker) {
+                  site.marker = new L.Marker(site.position, {
+                      draggable: true
+                  });
+                  site.marker.on('click', (e) => {
+                      var popup = L.popup()
+                          .setLatLng(site.position)
+                          .setContent(site.name)
+                          .openOn(map);
+                  });
+                  site.marker.addTo(map);
+                  site.marker.on('dragend', (e) => {
+                      site.position = e.target.getLatLng();
+                      console.log(e.target.getLatLng());
+                      updateSites();
+                  });
+              }
+          })(sites[i]);
           sitelist += '';
           $('#sites-table').html(sitelist);
       };
 
-      $.getJSON('/api/v1/sites/all', {}, function (result) {
+      $.getJSON('/api/v1/sites/all', {}, (result) => {
           sites = result;
           updateSites();
       });
@@ -189,6 +195,34 @@
 
           console.log("Add site");
       };
+
+      function findSiteById(id) {
+          for (var i = 0; i < sites.length; i++) {
+              if (sites[i].id == id)
+                  return sites[i];
+          }
+      };
+
+      var links = [];
+
+      function updateLinks() {
+          var linklist = '';
+          for (var i = 0; i < links.length; i++) (function (link) {
+              site0 = findSiteById(link.sites[0]);
+              site1 = findSiteById(link.sites[1]);
+              linklist += '<tr><td>' + site0.name + '</td><td>' + site1.name + '</td></tr>';
+              if (!link.line) {
+                  link.line = L.polyline([site0.position, site1.position])
+                      .addTo(map);
+              }
+          })(links[i]);
+          $('#links-table').html(linklist);
+      };
+
+      $.getJSON('/api/v1/links/all', {}, (result) => {
+          links = result;
+          updateLinks();
+      });
 
       var sidebar = L.control.sidebar('sidebar').addTo(map);
       L.control.scale().addTo(map);

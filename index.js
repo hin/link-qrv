@@ -29,15 +29,38 @@ app.get('/api/v1/sites/all', (req, res) => {
     var sites = [
         {
             name: 'SK0UX',
+            id: 0,
             position: { lat: 59.504170, lng: 18.137724 },
         },
         {
             name: 'SK0MT',
+            id: 1,
             position: { lat: 59.450127, lng: 18.079311 },
-        }
+        },
+        {
+            name: 'SK0BU',
+            id: 2,
+            position: { lat: 59.348051, lng: 18.074896 },
+        },
+        {
+            name: 'SK0RYG',
+            id: 3,
+            position: { lat: 59.523850, lng: 17.922381 },
+        },
     ];
 
     res.send(sites);
+    res.end();
+});
+
+app.get('/api/v1/links/all', (req, res) => {
+    var links = [
+        { id: 0, sites: [1, 2] },
+        { id: 1, sites: [0, 2] },
+        { id: 1, sites: [0, 3] },
+    ];
+
+    res.send(links);
     res.end();
 });
 
