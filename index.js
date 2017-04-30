@@ -29,11 +29,11 @@ app.get('/api/v1/sites/all', (req, res) => {
     var sites = [
         {
             name: 'SK0UX',
-            position: [ 59.504170, 18.137724 ],
+            position: { lat: 59.504170, lng: 18.137724 },
         },
         {
             name: 'SK0MT',
-            position: [ 59.450127, 18.079311 ],
+            position: { lat: 59.450127, lng: 18.079311 },
         }
 
     ];

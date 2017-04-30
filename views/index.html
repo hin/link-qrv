@@ -154,16 +154,18 @@
           var sitelist = '';
           for (var i = 0; i < sites.length; i++) {
               var site = sites[i];
-              sitelist += '<tr><td>' + site.name + '</td></tr>';
+              sitelist += '<tr><td>' + site.name + '</td>'
+              sitelist += '<td>' + site.position.lat + '/' + site.position.lng + '</td></tr>';
               if (!site.marker) {
                   site.marker = L.marker(site.position, {
                       draggable: true
                   }).bindPopup(site.name);
                   site.marker.addTo(map);
                   site.marker.on('dragend', (e) => {
-                      console.log(e.target._latlng);
+                      site.position = e.target.getLatLng();
+                      console.log(e.target.getLatLng());
+                      updateSites();
                   });
-
               }
           }
           sitelist += '';
