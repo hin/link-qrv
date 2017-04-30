@@ -35,7 +35,6 @@ app.get('/api/v1/sites/all', (req, res) => {
             name: 'SK0MT',
             position: { lat: 59.450127, lng: 18.079311 },
         }
-
     ];
 
     res.send(sites);

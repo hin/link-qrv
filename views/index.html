@@ -139,38 +139,46 @@
           zoomSnap: 0.5,
           zoomDelta: 0.5,
           layers: Object.values(baseMaps)[0],
-      }).setView([59.504, 18.137], 14);
+      }).setView([59.504, 18.137], 11);
 
       L.control.layers(baseMaps).addTo(map);
 
       var sites = [];
 
-      $.getJSON('/api/v1/sites/all', {}, function (result) {
-          sites = result;
-          updateSites();
-      });
-
       function updateSites() {
           var sitelist = '';
-          for (var i = 0; i < sites.length; i++) {
-              var site = sites[i];
-              sitelist += '<tr><td>' + site.name + '</td>'
-              sitelist += '<td>' + site.position.lat + '/' + site.position.lng + '</td></tr>';
-              if (!site.marker) {
-                  site.marker = L.marker(site.position, {
-                      draggable: true
-                  }).bindPopup(site.name);
-                  site.marker.addTo(map);
-                  site.marker.on('dragend', (e) => {
-                      site.position = e.target.getLatLng();
-                      console.log(e.target.getLatLng());
-                      updateSites();
-                  });
-              }
+          for (var i = 0; i < sites.length; i++) {(
+              function(site) {
+                  var site = sites[i];
+                  sitelist += '<tr><td>' + site.name + '</td>'
+                  sitelist += '<td>' + site.position.lat + '/' + site.position.lng + '</td></tr>';
+                  if (!site.marker) {
+                      site.marker = new L.Marker(site.position, {
+                          draggable: true
+                      });
+                      site.marker.on('click', (e) => {
+                          var popup = L.popup()
+                              .setLatLng(site.position)
+                              .setContent(site.name)
+                              .openOn(map);
+                      });
+                      site.marker.addTo(map);
+                      site.marker.on('dragend', (e) => {
+                          site.position = e.target.getLatLng();
+                          console.log(e.target.getLatLng());
+                          updateSites();
+                      });
+                  }
+              })(sites[i]);
           }
           sitelist += '';
           $('#sites-table').html(sitelist);
       };
+
+      $.getJSON('/api/v1/sites/all', {}, function (result) {
+          sites = result;
+          updateSites();
+      });
 
       function addSite() {
           map.on('click', (e) => {
