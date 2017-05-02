@@ -235,8 +235,6 @@
       var links = [];
 
       function linkClick(link, linkSites, event) {
-          var html = 'Link ' + linkSites[0].name + ' - ' + linkSites[1].name + '<br/>'
-              + 'Distance: ' + map.distance(linkSites[0].position, linkSites[1].position);
           var data = {
               lat0: linkSites[0].position.lat,
               lng0: linkSites[0].position.lng,
@@ -245,12 +243,41 @@
           };
           $.getJSON('/api/v1/elevation/line', data,
                     (result) => {
-                        console.log("RESULT" + JSON.stringify(result));
+                        var width = 300;
+                        var height = 200;
+                        var html = 'Link ' + linkSites[0].name + ' - ' + linkSites[1].name + '<br/>'
+                            + '<canvas id="elevationcanvas" width="' + width
+                            + '" height="' + height + '"></canvas>';
+//                        console.log("RESULT" + JSON.stringify(result));
+                        var popup = L.popup()
+                            .setLatLng(event.latlng)
+                            .setContent(html)
+                            .openOn(map);
+                        var canvas = document.getElementById('elevationcanvas');
+                        var ctx = canvas.getContext('2d');
+                        var maxElevation = -60000;
+                        var minElevation = 60000;
+                        for (var i = 0; i < result.numPoints; i++) {
+                            var elevation = result.points[i][2];
+                            if (elevation > maxElevation)
+                                maxElevation = elevation;
+                            if (elevation < minElevation)
+                                minElevation = elevation;
+                        }
+                        var xScale = width / result.totalDistance;
+                        var yScale = height / (maxElevation - minElevation);
+                        console.log(result.totalDistance);
+                        for (var i = 0; i < result.points.length; i++) {
+                            x = i * result.stepLength;
+                            y = result.points[i][2] - minElevation;
+                            console.log(i, x * xScale , y*yScale);
+                            if (i == 0)
+                                ctx.moveTo(0,0);
+                            else
+                                ctx.lineTo(x * xScale, 200-y * yScale);
+                        }
+                        ctx.stroke();
                     });
-          var popup = L.popup()
-              .setLatLng(event.latlng)
-              .setContent(html)
-              .openOn(map);
       }
 
       function updateLinks() {
