@@ -234,17 +234,25 @@
 
       var links = [];
 
+      function linkClick(link, sites, event) {
+          console.log(event);
+          var popup = L.popup()
+              .setLatLng(event.latlng)
+              .setContent(sites[0].name + ' - ' + sites[1].name)
+              .openOn(map);
+      }
+
       function updateLinks() {
           var linklist = '';
           for (var i = 0; i < links.length; i++) (function (link) {
-              site0 = findSiteById(link.sites[0]);
-              site1 = findSiteById(link.sites[1]);
+              var site0 = findSiteById(link.sites[0]);
+              var site1 = findSiteById(link.sites[1]);
               linklist += '<tr><td>' + site0.name + '</td><td>' + site1.name + '</td></tr>';
               if (!link.line) {
                   link.line = L.polyline([site0.position, site1.position]);
                   link.line.addTo(map);
                   link.line.on('click', (e) => {
-                      console.log(e);
+                      linkClick(link, [site0, site1], e);
                   });
               }
               link.line.setLatLngs([site0.position, site1.position]);
