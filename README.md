@@ -8,18 +8,18 @@ and is not really usable yet.
 ## Planned features
 
 There are some planned features, in no particular order:
-* Placement of sites
-* Placement of links between sites
-* Terrain profile of links between sites
-* Include earth curvature in terrain profile
-* Plot Fresnel zone in profile
-* Saving user data in a database
-* Radio propagation simulation of links beteen sites
-* User authentication
-* Multiple maps per user
-* Sharing maps between users
-* Read-only publicly visible maps with a static URL
-* Downloadable maps in GeoJSON format
+- [ ] Placement of sites
+- [ ] Placement of links between sites
+- [ ] Terrain profile of links between sites
+- [ ] Include earth curvature in terrain profile
+- [ ] Plot Fresnel zone in profile
+- [ ] Saving user data in a database
+- [ ] Radio propagation simulation of links beteen sites
+- [ ] User authentication
+- [ ] Multiple maps per user
+- [ ] Sharing maps between users
+- [ ] Read-only publicly visible maps with a static URL
+- [ ] Downloadable maps in GeoJSON format
 
 ## Running Link-QRV
 
