@@ -120,9 +120,9 @@ app.get('/api/v1/sites/all', (req, res) => {
 
 app.get('/api/v1/links/all', (req, res) => {
     var links = [
-        { sites: [1, 2] },
-        { sites: [0, 2] },
-        { sites: [0, 3] },
+        { name: 'MT-BU', sites: [1, 2], elevation: [30, 25] },
+        { name: 'UX-BU', sites: [0, 2], elevation: [32, 25] },
+        { name: 'UX-RYG', sites: [0, 3], elevation: [32, 25] },
     ];
 
     res.send(links);
