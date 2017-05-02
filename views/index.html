@@ -237,6 +237,16 @@
       function linkClick(link, linkSites, event) {
           var html = 'Link ' + linkSites[0].name + ' - ' + linkSites[1].name + '<br/>'
               + 'Distance: ' + map.distance(linkSites[0].position, linkSites[1].position);
+          var data = {
+              lat0: linkSites[0].position.lat,
+              lng0: linkSites[0].position.lng,
+              lat1: linkSites[1].position.lat,
+              lng1: linkSites[1].position.lng,
+          };
+          $.getJSON('/api/v1/elevation/line', data,
+                    (result) => {
+                        console.log("RESULT" + JSON.stringify(result));
+                    });
           var popup = L.popup()
               .setLatLng(event.latlng)
               .setContent(html)

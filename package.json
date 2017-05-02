@@ -10,6 +10,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "express": "^4.15.2",
+    "geodesy": "^1.1.1",
     "node-hgt": "^1.2.1"
   }
 }

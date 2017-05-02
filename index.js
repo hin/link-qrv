@@ -1,5 +1,6 @@
 var express = require('express');
 var hgt = require('node-hgt');
+var geodesy = require('geodesy');
 
 var app = express();
 
@@ -23,6 +24,43 @@ app.get('/api/v1/elevation/point', (req, res) => {
         });
         res.end();
     });
+});
+
+app.get('/api/v1/elevation/line', (req, res) => {
+    var latlng0 = new geodesy.LatLonEllipsoidal(parseFloat(req.query.lat0),
+                                                parseFloat(req.query.lng0));
+    var latlng1 = new geodesy.LatLonEllipsoidal(parseFloat(req.query.lat1),
+                                                parseFloat(req.query.lng1));
+    var stepLength = 30.0;
+    if (req.query.step != undefined)
+        stepLength = parseFloat(req.query.step);
+    var totalDistance = latlng0.distanceTo(latlng1);
+    var initialBearing = latlng0.initialBearingTo(latlng1);
+    var finalBearing = latlng0.finalBearingTo(latlng1);
+    var numSteps = Math.ceil(totalDistance/stepLength);
+    var realStepLength = totalDistance / numSteps;
+    var result = {
+        totalDistance: totalDistance,
+        initialBearing: initialBearing,
+        finalBearing: finalBearing,
+        stepLength: realStepLength,
+        numPoints: 0,
+        points: new Array(numSteps),
+    };
+    for (var i = 0; i < numSteps; i++) (function(index) {
+        var distance = realStepLength * index;
+        var point = latlng0.destinationPoint(distance, initialBearing);
+
+        elevationdata.getElevation([point.lat, point.lon], (err, elev) => {
+            result.points[index] = [point.lat, point.lon, elev];
+            result.numPoints++;
+            /* Check if we've got all the points on the line */
+            if (result.numPoints == numSteps) {
+                res.send(result);
+                res.end();
+            }
+        });
+    })(i);
 });
 
 app.get('/api/v1/sites/all', (req, res) => {
