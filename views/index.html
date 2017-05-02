@@ -260,34 +260,41 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
                         var html = 'Link ' + linkSites[0].name + ' - ' + linkSites[1].name + '<br/>'
                             + '<canvas id="elevationcanvas" width="' + width
                             + '" height="' + height + '"></canvas>';
-//                        console.log("RESULT" + JSON.stringify(result));
                         var popup = L.popup()
                             .setLatLng(event.latlng)
                             .setContent(html)
                             .openOn(map);
                         var canvas = document.getElementById('elevationcanvas');
                         var ctx = canvas.getContext('2d');
-                        var maxElevation = -60000;
-                        var minElevation = 60000;
+                        var antennaElevation = [
+                            link.elevation[0] + result.points[0][2],
+                            link.elevation[1] + result.points[result.points.length-1][2],
+                        ];
+                        var maxElevation = Math.max(antennaElevation[0], antennaElevation[1]);
+                        var minElevation = Math.min(antennaElevation[0], antennaElevation[1]);
                         for (var i = 0; i < result.numPoints; i++) {
                             var elevation = result.points[i][2];
-                            if (elevation > maxElevation)
-                                maxElevation = elevation;
-                            if (elevation < minElevation)
-                                minElevation = elevation;
+                            maxElevation = Math.max(maxElevation, elevation);
+                            minElevation = Math.min(minElevation, elevation);
                         }
                         var xScale = width / result.totalDistance;
                         var yScale = height / (maxElevation - minElevation);
-                        console.log(result.totalDistance);
+
+                        /* Draw terrain. */
+                        /* TODO: Calculate and draw earth curvature */
                         for (var i = 0; i < result.points.length; i++) {
                             x = i * result.stepLength;
                             y = result.points[i][2] - minElevation;
-                            console.log(i, x * xScale , y*yScale);
                             if (i == 0)
-                                ctx.moveTo(0,0);
+                                ctx.moveTo(x * xScale, height - y * yScale);
                             else
-                                ctx.lineTo(x * xScale, 200-y * yScale);
+                                ctx.lineTo(x * xScale, height - y * yScale);
                         }
+
+                        /* Draw link path between antennas */
+                        ctx.moveTo(0, height - (antennaElevation[0] - minElevation) * yScale);
+                        ctx.lineTo(width, height - (antennaElevation[1] - minElevation) * yScale);
+
                         ctx.stroke();
                     });
       }
