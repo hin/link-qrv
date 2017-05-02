@@ -11,6 +11,8 @@ There are some planned features, in no particular order:
 * Placement of sites
 * Placement of links between sites
 * Terrain profile of links between sites
+* Include earth curvature in terrain profile
+* Plot Fresnel zone in profile
 * Saving user data in a database
 * Radio propagation simulation of links beteen sites
 * User authentication
@@ -20,7 +22,6 @@ There are some planned features, in no particular order:
 * Downloadable maps in GeoJSON format
 
 ## Running Link-QRV
-
 
 ### Prerequisites
 
