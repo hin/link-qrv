@@ -1,12 +1,12 @@
 {
-  "name": "rfprop",
+  "name": "link-qrv",
   "version": "0.0.1",
-  "description": "RF Propagation Tool",
+  "description": "Web based radiolink planning tool",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Hans Insulander SM0UTY",
+  "author": "Hans Insulander (SM0UTY) <hans@codium.se>",
   "license": "BSD-2-Clause",
   "dependencies": {
     "express": "^4.15.2",
