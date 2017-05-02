@@ -234,11 +234,12 @@
 
       var links = [];
 
-      function linkClick(link, sites, event) {
-          console.log(event);
+      function linkClick(link, linkSites, event) {
+          var html = 'Link ' + linkSites[0].name + ' - ' + linkSites[1].name + '<br/>'
+              + 'Distance: ' + map.distance(linkSites[0].position, linkSites[1].position);
           var popup = L.popup()
               .setLatLng(event.latlng)
-              .setContent(sites[0].name + ' - ' + sites[1].name)
+              .setContent(html)
               .openOn(map);
       }
 
