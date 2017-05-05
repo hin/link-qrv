@@ -41,8 +41,13 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
             <li><a href="#Map">Map</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li>
+              <a href="#fullscreen" onclick="toggleFullscreen(document.documentElement);">
+                <span class="glyphicon glyphicon-fullscreen"></span> Fullscreen
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -282,6 +287,32 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
           linklist += '</li>';
           $('#links-table').html(linklist);
       };
+
+      function toggleFullscreen(elem) {
+          elem = elem || document.documentElement;
+          if (!document.fullscreenElement && !document.mozFullScreenElement &&
+              !document.webkitFullscreenElement && !document.msFullscreenElement) {
+              if (elem.requestFullscreen) {
+                  elem.requestFullscreen();
+              } else if (elem.msRequestFullscreen) {
+                  elem.msRequestFullscreen();
+              } else if (elem.mozRequestFullScreen) {
+                  elem.mozRequestFullScreen();
+              } else if (elem.webkitRequestFullscreen) {
+                  elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+              }
+          } else {
+              if (document.exitFullscreen) {
+                  document.exitFullscreen();
+              } else if (document.msExitFullscreen) {
+                  document.msExitFullscreen();
+              } else if (document.mozCancelFullScreen) {
+                  document.mozCancelFullScreen();
+              } else if (document.webkitExitFullscreen) {
+                  document.webkitExitFullscreen();
+              }
+          }
+      }
 
       $.getJSON('/api/v1/links/all', {}, (result) => {
           links = result;
