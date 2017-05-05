@@ -112,6 +112,26 @@ app.get('/api/v1/sites/all', (req, res) => {
             id: 3,
             position: { lat: 59.523850, lng: 17.922381 },
         },
+        {
+            name: 'FAKE1',
+            id: 4,
+            position: { lat: 59.5, lng: 18.1 },
+        },
+        {
+            name: 'FAKE2',
+            id: 5,
+            position: { lat: 59.5, lng: 18.2 },
+        },
+        {
+            name: 'FAKE3',
+            id: 6,
+            position: { lat: 59.5, lng: 18.3 },
+        },
+        {
+            name: 'FAKE4',
+            id: 7,
+            position: { lat: 59.5, lng: 18.4 },
+        },
     ];
 
     res.send(sites);
