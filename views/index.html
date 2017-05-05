@@ -70,9 +70,9 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
                 </div>
               </div>
               <div class="panel-footer">
-                <button type="button"><span class="glyphicon glyphicon-plus"></button>
+                <button type="button" onclick="addSite();"><span class="glyphicon glyphicon-plus"></button>
                 &nbsp;
-                <button type="button"><span class="glyphicon glyphicon-minus"></button>
+                <button type="button" onclick="removeSite();"><span class="glyphicon glyphicon-minus"></button>
               </div>
             </div>
           </div>
@@ -89,9 +89,9 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
                 </div>
               </div>
               <div class="panel-footer">
-                <button type="button"><span class="glyphicon glyphicon-plus"></button>
+                <button type="button" onclick="addLink();"><span class="glyphicon glyphicon-plus"></button>
                 &nbsp;
-                <button type="button"><span class="glyphicon glyphicon-minus"></button>
+                <button type="button" onclick="removeLink();"><span class="glyphicon glyphicon-minus"></button>
               </div>
             </div>
           </div>
@@ -201,6 +201,7 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
               if (linkSelection.length == 2) {
                   links.push({sites: linkSelection});
                   addLinkMode = false;
+                  linkSelection = [];
                   console.log(links);
                   updateLinks();
               }
