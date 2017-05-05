@@ -19,74 +19,10 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
 
     <link rel="stylesheet" href="/components/font-awesome/css/font-awesome.min.css"></link>
 
-    <script src="/components/sidebar-v2/js/leaflet-sidebar.min.js"></script>
-    <link rel="stylesheet" href="/components/sidebar-v2/css/leaflet-sidebar.min.css"></link>
-
     <link rel="stylesheet" type="text/css" href="/css/style.css"></link>
   </head>
   <body>
-    <div id="sidebar" class="sidebar collapsed">
-      <div class="sidebar-tabs">
-        <ul role="tablist">
-          <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
-          <li><a href="#sites" role="tab"><i class="fa fa-home"></i></a></li>
-          <li><a href="#links" role="tab"><i class="fa fa-arrows-h"></i></a></li>
-        </ul>
-        <ul role="tablist">
-          <li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
-          <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-        </ul>
-      </div>
-
-      <div class="sidebar-content">
-        <div class="sidebar-pane" id="home">
-          <h1 class="sidebar-header">
-            Link-QRV
-            <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-          </h1>
-
-          <p class="copyright">
-            Copyright (c) 2017, Hans Insulander (SM0UTY).<br>
-            All rights reserved.
-          <p>
-            Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-          <p>
-            <ul>
-              <li> Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-              <li> Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-            </ul>
-            THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-          </p>
-        </div>
-
-        <div class="sidebar-pane" id="profile">
-          <h1 class="sidebar-header">Profile<span class="sidebar-close"><span class="fa fa-caret-left"/></span></h1>
-        </div>
-
-        <div class="sidebar-pane" id="sites">
-          <h1 class="sidebar-header">Sites<span class="sidebar-close"><span class="fa fa-caret-left"/></span></h1>
-          <table id="sites-table">
-          </table>
-
-          <button><span class="fa fa-plus" onclick="addSite();"/></button>
-        </div>
-
-        <div class="sidebar-pane" id="links">
-          <h1 class="sidebar-header">Links<span class="sidebar-close"><span class="fa fa-caret-left"/></span></h1>
-          <table id="links-table">
-          </table>
-
-          <button><span class="fa fa-plus" onclick="addLink();"/></button>
-        </div>
-
-        <div class="sidebar-pane" id="settings">
-          <h1 class="sidebar-header">Settings<span class="sidebar-close"><span class="fa fa-caret-left"/></span></h1>
-        </div>
-      </div>
-
-    </div>
-
-    <div id="mapid" class="sidebar-map"></div>
+    <div id="mapid" class="map"></div>
 
     <script type="text/javascript">
 
@@ -288,7 +224,6 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
           updateLinks();
       });
 
-      var sidebar = L.control.sidebar('sidebar').addTo(map);
       L.control.scale().addTo(map);
 
     </script>
