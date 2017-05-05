@@ -8,6 +8,7 @@ html, body {
     padding: 0px;
     box-sizing: border-box;
     margin: 0px;
+    overflow-y: scroll;
 }
 
 .fill-rest {
@@ -16,7 +17,6 @@ html, body {
     padding-top: 50px;
     box-sizing: border-box;
     margin: 0px;
-    overflow-y: scroll;
 }
 
 .panel-group {
