@@ -62,8 +62,7 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
               </h4>
             </div>
             <div id="collapse-sites" class="panel-collapse collapse">
-              <div class="panel-body">
-                Bla bla.
+              <div class="panel-body" id="sites-table">
               </div>
             </div>
 
@@ -75,8 +74,7 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
               </h4>
             </div>
             <div id="collapse-links" class="panel-collapse collapse">
-              <div class="panel-body">
-                Bla bla.
+              <div class="panel-body" id="links-table">
               </div>
             </div>
 
@@ -161,10 +159,9 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
       };
 
       function updateSites() {
-          var sitelist = '';
+          var sitelist = '<ul class="list-group">';
           for (var i = 0; i < sites.length; i++) (function(site) {
-              sitelist += '<tr><td>' + site.name + '</td>'
-              sitelist += '<td>' + site.position.lat + '/' + site.position.lng + '</td></tr>';
+              sitelist += '<li class="list-group-item">' + site.name + '</li>'
               if (!site.marker) {
                   site.marker = new L.Marker(site.position, {
                       draggable: true
@@ -186,7 +183,7 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
 
               }
           })(sites[i]);
-          sitelist += '';
+          sitelist += '</ul>';
           $('#sites-table').html(sitelist);
       };
 
@@ -268,11 +265,11 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
       }
 
       function updateLinks() {
-          var linklist = '';
+          var linklist = '<ul class="list-group">';
           for (var i = 0; i < links.length; i++) (function (link) {
               var site0 = findSiteById(link.sites[0]);
               var site1 = findSiteById(link.sites[1]);
-              linklist += '<tr><td>' + site0.name + '</td><td>' + site1.name + '</td></tr>';
+              linklist += '<li class="list-group-item">' + site0.name + ' - ' + site1.name + '</li>';
               if (!link.line) {
                   link.line = L.polyline([site0.position, site1.position]);
                   link.line.addTo(map);
@@ -282,6 +279,7 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
               }
               link.line.setLatLngs([site0.position, site1.position]);
           })(links[i]);
+          linklist += '</li>';
           $('#links-table').html(linklist);
       };
 
