@@ -18,12 +18,18 @@ html, body {
     margin: 0px;
 }
 
+.panel-group {
+    padding: 5px;
+}
+
 .no-margin {
     margin: 0px;
 }
 .no-padding {
     padding: 0px;
 }
+/*
 .panel {
     border-radius: 0px;
 }
+*/

@@ -41,7 +41,7 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
             <li><a href="#Map">Map</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Create account</a></li>
             <li><a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             <li>
               <a href="#fullscreen" onclick="toggleFullscreen(document.documentElement);">
@@ -55,10 +55,10 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
 
     <div class="row fill-rest">
 
-      <div class="col-md-3 no-padding">
+      <div class="col-xs-2 no-padding">
         <div class="panel-group" id="accordion">
-          <div class="panel panel-default">
 
+          <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse-sites">
@@ -67,10 +67,12 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
               </h4>
             </div>
             <div id="collapse-sites" class="panel-collapse collapse">
-              <div class="panel-body" id="sites-table">
+              <div class="panel-body list-group no-padding" id="sites-table">
               </div>
             </div>
+          </div>
 
+          <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse-links">
@@ -79,15 +81,15 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
               </h4>
             </div>
             <div id="collapse-links" class="panel-collapse collapse">
-              <div class="panel-body" id="links-table">
+              <div class="panel-body list-group no-padding" id="links-table">
               </div>
             </div>
-
           </div>
+
         </div>
       </div>
 
-      <div class="col-md-9 fill">
+      <div class="col-xs-10 fill">
         <div id="mapid" class="map fill"></div>
       </div>
 
@@ -196,9 +198,9 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
       };
 
       function updateSites() {
-          var sitelist = '<ul class="list-group">';
+          var sitelist = '';
           for (var i = 0; i < sites.length; i++) (function(site) {
-              sitelist += '<li class="list-group-item">' + site.name + '</li>'
+              sitelist += '<button type="button" class="list-group-item">' + site.name + '</button>'
               if (!site.marker) {
                   site.marker = new L.Marker(site.position, {
                       draggable: true
@@ -220,7 +222,6 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
 
               }
           })(sites[i]);
-          sitelist += '</ul>';
           $('#sites-table').html(sitelist);
       };
 
@@ -302,11 +303,12 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
       }
 
       function updateLinks() {
-          var linklist = '<ul class="list-group">';
+          var linklist = '';
           for (var i = 0; i < links.length; i++) (function (link) {
               var site0 = findSiteById(link.sites[0]);
               var site1 = findSiteById(link.sites[1]);
-              linklist += '<li class="list-group-item">' + site0.name + ' - ' + site1.name + '</li>';
+              linklist += '<button type="button" class="list-group-item">'
+                  + site0.name + ' - ' + site1.name + '</button>';
               if (!link.line) {
                   link.line = L.polyline([site0.position, site1.position]);
                   link.line.addTo(map);
@@ -316,7 +318,6 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
               }
               link.line.setLatLngs([site0.position, site1.position]);
           })(links[i]);
-          linklist += '</li>';
           $('#links-table').html(linklist);
       };
 
