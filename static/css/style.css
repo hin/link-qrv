@@ -16,10 +16,27 @@ html, body {
     padding-top: 50px;
     box-sizing: border-box;
     margin: 0px;
+    overflow-y: scroll;
 }
 
 .panel-group {
     padding: 5px;
+}
+
+a:link {
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
+
+a:hover {
+    color: black;
+}
+
+a:active {
+    color: black;
 }
 
 .no-margin {
@@ -28,8 +45,3 @@ html, body {
 .no-padding {
     padding: 0px;
 }
-/*
-.panel {
-    border-radius: 0px;
-}
-*/
