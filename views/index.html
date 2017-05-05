@@ -5,7 +5,7 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
 <html>
   <head>
     <title>Link-QRV</title>
-    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
 
     <script src="/components/jquery/dist/jquery.min.js"></script>
@@ -21,8 +21,74 @@ Copyright @ 2017 Hans Insulander (SM0UTY) <hans@codium.se>.
 
     <link rel="stylesheet" type="text/css" href="/css/style.css"></link>
   </head>
+
   <body>
-    <div id="mapid" class="map"></div>
+    <div class="navbar navbar-default no-margin navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed"
+                  data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Link-QRV</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#about">About</a></li>
+            <li><a href="#Map">Map</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row fill-rest">
+
+      <div class="col-md-3 no-padding">
+        <div class="panel-group" id="accordion">
+          <div class="panel panel-default">
+
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse-sites">
+                  Sites
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-sites" class="panel-collapse collapse">
+              <div class="panel-body">
+                Bla bla.
+              </div>
+            </div>
+
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse-links">
+                  Links
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-links" class="panel-collapse collapse">
+              <div class="panel-body">
+                Bla bla.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9 fill">
+        <div id="mapid" class="map fill"></div>
+      </div>
+
+    </div> <!-- row -->
 
     <script type="text/javascript">
 
